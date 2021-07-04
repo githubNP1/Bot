@@ -1,9 +1,8 @@
 package bot;
 
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
-import java.util.Arrays;
-import java.util.Random;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
 
 public class typer {
     
