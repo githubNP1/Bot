@@ -4,20 +4,20 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.util.*;
 
-public class buyingBot2 {
+public class BuyingBot2 {
     String set;
     int quantity;
     ArrayList<String> items;
     ArrayList<String> buySlots;
     Random rand = new Random();
     Robot robot = new Robot();
-    typer typer = new typer();
+    Typer typer = new Typer();
     
     public static void main(String[] args) throws AWTException{
-        buyingBot2 one = new buyingBot2();
+        BuyingBot2 one = new BuyingBot2();
     }
     
-    public buyingBot2() throws AWTException{
+    public BuyingBot2() throws AWTException{
         items = getSet();
         buySlots = buySlotCoords();
         buy();
