@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class typer {
+public class Typer {
     
     public String[] splitString(String item){
         String[] items = item.split("");
