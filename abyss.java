@@ -3,7 +3,7 @@ package bot;
 import java.awt.*;
 import java.awt.event.*;
 
-public class abyss {
+public class Abyss {
     public static void main(String[] args) throws AWTException{
         Robot one = new Robot();
         one.delay(3000); 
