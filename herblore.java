@@ -1,22 +1,11 @@
 package bot;
 
-import java.awt.AWTException;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.util.Random;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
 
 public class herblore {
-    int minXBank;
-    int maxXBank;
-    int minYBank;
-    int maxYBank;
-    int minXWell;
-    int maxXWell;
-    int minYWell;
-    int maxYWell;
+    int minXBank, maxXBank, minYBank, maxYBank, minXWell, maxXWell, minYWell, maxYWell;
     
     public void getBankBoundaries(Robot one){
         one.delay(2000);
@@ -50,17 +39,16 @@ public class herblore {
         Random rand = new Random();
         int max = rand.nextInt((12 - 8) + 1) + 8;
         for(int i = 0;i<=max;i++){
-        
             int x = rand.nextInt((maxXBank - minXBank) + 1) + minXBank;
             int y = rand.nextInt((maxYBank - minYBank) + 1) + minYBank;
             
             one.mouseMove(x, y); 
-            System.out.println("1");
+            //System.out.println("1");
             one.delay(rand.nextInt((492 - 379) + 1) + 379);
             one.mousePress(InputEvent.BUTTON1_MASK);
             one.delay(rand.nextInt((90 - 20) + 1) + 20);
             one.mouseRelease(InputEvent.BUTTON1_MASK);
-            System.out.println("2");
+            //System.out.println("2");
             one.delay(rand.nextInt((1298 - 920) + 1) + 920);
             one.mousePress(InputEvent.BUTTON1_MASK);
             one.delay(rand.nextInt((90 - 20) + 1) + 20);
@@ -99,7 +87,6 @@ public class herblore {
             one.delay(19000); 
         }
     }
-    
     
     public static void main(String[] args) throws AWTException{
         Robot one = new Robot();
