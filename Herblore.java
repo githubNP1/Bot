@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class herblore {
+public class Herblore {
     int minXBank, maxXBank, minYBank, maxYBank, minXWell, maxXWell, minYWell, maxYWell;
     
     public void getBankBoundaries(Robot one){
@@ -90,7 +90,7 @@ public class herblore {
     
     public static void main(String[] args) throws AWTException{
         Robot one = new Robot();
-        herblore two = new herblore();
+        Herblore two = new Herblore();
         two.getBankBoundaries(one);
         two.getWellBoundaries(one);  
         Random three = new Random();
