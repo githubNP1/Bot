@@ -1,9 +1,7 @@
 package bot;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
+import java.awt.*;
+import java.awt.event.*;
 
 public class abyss {
     public static void main(String[] args) throws AWTException{
@@ -21,6 +19,5 @@ public class abyss {
                 System.out.println(ex);
             }
         }
-        
     }
 }
