@@ -112,11 +112,11 @@ public class BuyingBot2 {
     }
     
     public int getYSelect(){
-        return rand.nextInt((496 - 456) + 1) + 456;
+        return rand.nextInt((370 - 330) + 1) + 330;
     }
     
     public int getXQuantity(){
-        return rand.nextInt(376 - 350) + 350;
+        return rand.nextInt(353 - 327) + 327;
     }
     
     public int getYQuantity(){
@@ -124,11 +124,11 @@ public class BuyingBot2 {
     }
     
     public int getXConfirm(){
-        return rand.nextInt(633 - 489)+ 489;
+        return rand.nextInt(631 - 491)+ 491;
     }
     
     public int getYConfirm(){
-        return rand.nextInt(593 - 574) + 574;
+        return rand.nextInt(591 - 573) + 573;
     }
     
     public void buy(){
@@ -148,7 +148,7 @@ public class BuyingBot2 {
                 click();
             }
             robot.delay(rand.nextInt(1596 - 1150) + 1150);
-            robot.mouseMove(755 + rand.nextInt(12), 330 + rand.nextInt(12));
+            robot.mouseMove(775 + rand.nextInt(12), 327 + rand.nextInt(12));
             for(int k = 0; k < rand.nextInt(4) + 4; k++){
                 click();
             }
