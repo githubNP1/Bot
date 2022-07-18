@@ -394,7 +394,6 @@ public class Typer {
                     //String mistake = getMistake(mistakes);
                     //typeLetter(robot, rand, getKeyInput(mistake));
                     
-                    newMistakeGenerator(rand);
                     typeLetter(robot, rand, newMistakeGenerator(rand)); 
 
                     robot.delay(rand.nextInt(1213 - 834) + 834); //just add another delay
