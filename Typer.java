@@ -6,12 +6,12 @@ import java.util.*;
 
 public class Typer {
     
-    public String[] splitString(String item){
+    public String[] splitString(String item){  //splits string and returns array of characters
         String[] items = item.split("");
         return items;
     }
     
-    public int getKeyInput(String chara){
+    public int getKeyInput(String chara){ //returns keyevent for a given character
         switch(chara){
             case "a": 
                 return KeyEvent.VK_A; 
@@ -102,20 +102,12 @@ public class Typer {
         }
     }
     
-    public int typeDelay(){ //need too vary speeds more
-        Random rand = new Random();
-        int delay;
-        int type = rand.nextInt(4);
-        if (type == 2){
-            delay = rand.nextInt(238 - 138) + 138;
-        }
-        else {
-            delay = rand.nextInt(138 - 45) + 45;
-        }
-        return delay;
+    public int newMistakeGenerator(Random rand){
+        String[] mistakes = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"," ",",",".",";","[","-","0","1","2","3","4","5","6","7","8","9"};
+        return getKeyInput(mistakes[rand.nextInt(mistakes.length)]);
     }
     
-    public String[] getMistakes(String letter){
+    public String[] getMistakes(String letter){  //returns array of possible mistakes for a given character
         String[] mistakes = new String[4];
         switch(letter){
             case "a":
@@ -143,7 +135,7 @@ public class Typer {
                 mistakes[3] = "x";
                 return mistakes;
             case "e":
-                mistakes[0] = "3"; //check if runescape type item accepts numbers
+                mistakes[0] = "3"; 
                 mistakes[1] = "w";
                 mistakes[2] = "d";
                 mistakes[3] = "r";
@@ -350,51 +342,69 @@ public class Typer {
         return null;
     }
     
-    public String getMistake(String[] mistakes){
+    public String getMistake(String[] mistakes){  //returns a randomly selected mistake, could possibly integrate with previous method.
         Random rand = new Random();
         int select = rand.nextInt(4);
         return mistakes[select];
     }
     
-    public void type(String item, Robot one){
+    public void typeAddressSign(Robot robot, Random rand){ //types @       
+        robot.delay(rand.nextInt(98 - 20) + 20);
+        robot.keyPress(KeyEvent.VK_SHIFT);
+        typeDelay(robot, rand);
+        robot.keyPress(KeyEvent.VK_QUOTE);
+        robot.delay(rand.nextInt(98 - 20) + 20);
+        robot.keyRelease(KeyEvent.VK_QUOTE);
+        robot.delay(rand.nextInt(98 - 20) + 20);
+        robot.keyRelease(KeyEvent.VK_SHIFT);
+        typeDelay(robot, rand);
+    }
+    
+    public void typeLetter(Robot robot, Random rand, int KeyEvent){    //types a letter using given keyevent
+        robot.keyPress(KeyEvent);
+        robot.delay(rand.nextInt(98 - 20) + 20);
+        robot.keyRelease(KeyEvent);
+        typeDelay(robot, rand);
+    }
+    
+    public void typeDelay(Robot robot, Random rand){ //this adds a delay between typing each character
+        int delay;
+        int type = rand.nextInt(4);
+        if (type == 2){
+            delay = rand.nextInt(238 - 138) + 138;
+        }
+        else {
+            delay = rand.nextInt(138 - 45) + 45;
+        }
+        robot.delay(delay); 
+    }
+    
+    public void type(String item, Robot robot){   //this method is called by buying bot class
         Random rand = new Random();
         String[] items = splitString(item);
         for (int i = 0; i < items.length; i++){
-        
-            if ("@".equals(items[i])){
-                one.delay(rand.nextInt(98 - 20) + 20);
-                one.keyPress(KeyEvent.VK_SHIFT);
-                one.delay(typeDelay());
-                one.keyPress(KeyEvent.VK_QUOTE);
-                one.delay(rand.nextInt(98 - 20) + 20);
-                one.keyRelease(KeyEvent.VK_QUOTE);
-                one.delay(rand.nextInt(98 - 20) + 20);
-                one.keyRelease(KeyEvent.VK_SHIFT);
-                one.delay(typeDelay());
+            if ("@".equals(items[i])){ 
+                typeAddressSign(robot,rand);
             }
             else{
-                int numberOfMistake = rand.nextInt(15);
+                int numberOfMistake = rand.nextInt(15); //simply used to give a 1 in 15 chance of making a mistake   
                 if (numberOfMistake == 4){
-                    String[] mistakes = getMistakes(items[i]);
-                    String mistake = getMistake(mistakes);
-                    int wrongLetter = getKeyInput(mistake); 
+                    
+                    //String[] mistakes = getMistakes(items[i]); //can condense into one line - getMistake(getMistakes(items[i))
+                    //String mistake = getMistake(mistakes);
+                    //typeLetter(robot, rand, getKeyInput(mistake));
+                    
+                    newMistakeGenerator(rand);
+                    typeLetter(robot, rand, newMistakeGenerator(rand)); 
 
-                    one.keyPress(wrongLetter);
-                    one.delay(rand.nextInt(98 - 20) + 20);
-                    one.keyRelease(wrongLetter);
-
-                    one.delay(rand.nextInt(1213 - 834) + 834);
-                    one.keyPress(KeyEvent.VK_BACK_SPACE);
-                    one.delay(rand.nextInt(98 - 20) + 20);
-                    one.keyRelease(KeyEvent.VK_BACK_SPACE);
-                    one.delay(rand.nextInt(1213 - 834) + 834);
+                    robot.delay(rand.nextInt(1213 - 834) + 834); //just add another delay
+                    
+                    typeLetter(robot, rand, KeyEvent.VK_BACK_SPACE);
+                    
+                    robot.delay(rand.nextInt(1213 - 834) + 834);  //just add another delay
                 }
 
-                int letter = getKeyInput(items[i]);
-                one.keyPress(letter);
-                one.delay(rand.nextInt(98 - 20) + 20);
-                one.keyRelease(letter);
-                one.delay(typeDelay());
+                typeLetter(robot, rand, getKeyInput(items[i]));
             }
         }
     }
