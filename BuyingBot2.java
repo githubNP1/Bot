@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.util.*;
 
-public class BuyingBot2 {
+public class BuyingBot2 { //requires inputs of type of armour and quantity
     String set;
     int quantity;
     ArrayList<String> items;
@@ -14,19 +14,19 @@ public class BuyingBot2 {
     Typer typer = new Typer();
     
     public static void main(String[] args) throws AWTException{
-        BuyingBot2 one = new BuyingBot2();
+        new BuyingBot2(); 
     }
     
     public BuyingBot2() throws AWTException{
-        items = getSet();
+        items = getSet(); 
         buySlots = buySlotCoords();
         buy();
     }
     
-    //method to ask what set and how many
+    //method to ask what item set and how many
     public ArrayList<String> getSet(){
         Scanner scanner = new Scanner(System.in);
-        set = scanner.next();
+        set = scanner.next(); 
         quantity = scanner.nextInt();
         scanner.close();
         switch(set){
@@ -38,7 +38,7 @@ public class BuyingBot2 {
                 return getBandosArray();
         }
     }
-    
+    //returns arraylist of item strings
     public ArrayList<String> getSubjArray(){
         ArrayList<String> items = new ArrayList<>();
         items.add("boots of sub");
@@ -75,9 +75,9 @@ public class BuyingBot2 {
         return items;
     }
     
-    public ArrayList<String> buySlotCoords(){
+    public ArrayList<String> buySlotCoords(){ //returns arraylist of coord strings, coordinates are of certain points on the game ui
         ArrayList<String> coords = new ArrayList<>();
-        coords.add("335,260");
+        coords.add("335,260"); 
         coords.add("512,260");
         coords.add("689,260");
         coords.add("335,388");
@@ -88,10 +88,12 @@ public class BuyingBot2 {
         return coords;
     }
     
+    //takes slot coords from coords list and returns coords in string array
     public String[] getCoords(int slot, ArrayList<String> list){
         return list.get(slot).split(",");
     }
-    
+    //coords represent an area on the ui, typically a rectangle, with length and width of 39 pixels and an origin of given coords.
+    //this method returns a random coord within this area.
     public int adjustX(String[] coords){
         return Integer.valueOf(coords[0]) + rand.nextInt(39);
     }
@@ -99,61 +101,61 @@ public class BuyingBot2 {
     public int adjustY(String[] coords){
         return Integer.valueOf(coords[1]) + rand.nextInt(39);
     }
-    
+    //this method clicks the mouse with a random delays between the press and release, to simulate a human clicking, rather than a program.
     public void click(){
         robot.mousePress(InputEvent.BUTTON1_MASK);
         robot.delay(rand.nextInt(98 - 20) + 20);
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
         robot.delay(rand.nextInt(92 - 79) + 79);
     }
-    
+    //represents another box for the item
     public int getXSelect(){
-        return rand.nextInt((462 - 307) + 1) + 307;
+        return rand.nextInt((462 - 307) + 1) + 307; 
     }
     
     public int getYSelect(){
-        return rand.nextInt((370 - 330) + 1) + 330;
+        return rand.nextInt((370 - 330) + 1) + 330;  
     }
-    
+    //represents and area for adjusting the quantity of items to be bought.
     public int getXQuantity(){
-        return rand.nextInt(353 - 327) + 327;
+        return rand.nextInt(353 - 327) + 327; 
     }
     
     public int getYQuantity(){
-        return rand.nextInt(371 - 355) + 355;
+        return rand.nextInt(371 - 355) + 355; 
     }
-    
+    //represents the confirm buttom to complete purchase.
     public int getXConfirm(){
-        return rand.nextInt(631 - 491)+ 491;
+        return rand.nextInt(631 - 491)+ 491; 
     }
     
     public int getYConfirm(){
-        return rand.nextInt(591 - 573) + 573;
+        return rand.nextInt(591 - 573) + 573; 
     }
     
     public void buy(){
-        for(int i = 0; i < items.size(); i++){
-            String[] buySlotCoords = getCoords(i, buySlots);
-            robot.mouseMove(adjustX(buySlotCoords),adjustY(buySlotCoords));
-            robot.delay(rand.nextInt(2396 - 1850) + 1850);
+        for(int i = 0; i < items.size(); i++){          //for every item
+            String[] buySlotCoords = getCoords(i, buySlots);     //get buy slot - could change so that buySlot Coords is already created before.
+            robot.mouseMove(adjustX(buySlotCoords),adjustY(buySlotCoords)); //move mouse to buy slot
+            robot.delay(rand.nextInt(2396 - 1850) + 1850);  //delay
             click();
             robot.delay(rand.nextInt(2396 - 1850) + 1850);
-            typer.type(items.get(i), robot); 
+            typer.type(items.get(i), robot);  // type item
             robot.delay(rand.nextInt(1596 - 1150) + 1150);
-            robot.mouseMove(getXSelect(),getYSelect());
+            robot.mouseMove(getXSelect(),getYSelect()); //move to select item
             click();
             robot.delay(rand.nextInt(1596 - 1150) + 1150); 
-            robot.mouseMove(getXQuantity(),getYQuantity());
+            robot.mouseMove(getXQuantity(),getYQuantity()); //move to adjust quantity
             for(int j = 0; j < quantity; j++){
                 click();
             }
             robot.delay(rand.nextInt(1596 - 1150) + 1150);
-            robot.mouseMove(775 + rand.nextInt(12), 327 + rand.nextInt(12));
+            robot.mouseMove(775 + rand.nextInt(12), 327 + rand.nextInt(12)); //move to adjust price - change to methods like quantity
             for(int k = 0; k < rand.nextInt(4) + 4; k++){
                 click();
             }
             robot.delay(rand.nextInt(1230 - 1045) + 1045);
-            robot.mouseMove(getXConfirm(),getYConfirm());  
+            robot.mouseMove(getXConfirm(),getYConfirm());  //move to confirm
             click();
             robot.delay(rand.nextInt(954 - 476) + 1500);
         }
