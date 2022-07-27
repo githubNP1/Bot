@@ -1,10 +1,10 @@
-package bot;
+package finalBot;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.util.*;
 
-public class BuyingBot2 { //requires inputs of type of armour and quantity
+public class Bot { //requires inputs of type of armour and quantity
     String set;
     int quantity;
     ArrayList<String> items;
@@ -12,12 +12,13 @@ public class BuyingBot2 { //requires inputs of type of armour and quantity
     Random rand = new Random();
     Robot robot = new Robot();
     Typer typer = new Typer();
+    MouseMovement mouse = new MouseMovement();
     
     public static void main(String[] args) throws AWTException{
-        new BuyingBot2(); 
+        new Bot(); 
     }
     
-    public BuyingBot2() throws AWTException{
+    public Bot() throws AWTException{
         items = getSet(); 
         buySlots = buySlotCoords();
         buy();
@@ -47,7 +48,7 @@ public class BuyingBot2 { //requires inputs of type of armour and quantity
         items.add("gown of sub");
         items.add("hood of sub");
         items.add("ward of sub");
-        Collections.shuffle(items); 
+        Collections.shuffle(items);  //explain importance of shuffle
         return items;
     }
     
@@ -121,7 +122,7 @@ public class BuyingBot2 { //requires inputs of type of armour and quantity
         return rand.nextInt(353 - 327) + 327; 
     }
     
-    public int getYQuantity(){
+    public int getYQuantity(){   //new name?
         return rand.nextInt(371 - 355) + 355; 
     }
     //represents the confirm buttom to complete purchase.
@@ -136,28 +137,34 @@ public class BuyingBot2 { //requires inputs of type of armour and quantity
     public void buy(){
         for(int i = 0; i < items.size(); i++){          //for every item
             String[] buySlotCoords = getCoords(i, buySlots);     //get buy slot - could change so that buySlot Coords is already created before.
-            robot.mouseMove(adjustX(buySlotCoords),adjustY(buySlotCoords)); //move mouse to buy slot
+            mouseMove(robot, adjustX(buySlotCoords),adjustY(buySlotCoords)); //move mouse to buy slot
             robot.delay(rand.nextInt(2396 - 1850) + 1850);  //delay
             click();
             robot.delay(rand.nextInt(2396 - 1850) + 1850);
             typer.type(items.get(i), robot);  // type item
             robot.delay(rand.nextInt(1596 - 1150) + 1150);
-            robot.mouseMove(getXSelect(),getYSelect()); //move to select item
+            mouseMove(robot, getXSelect(),getYSelect()); //move to select item
             click();
             robot.delay(rand.nextInt(1596 - 1150) + 1150); 
-            robot.mouseMove(getXQuantity(),getYQuantity()); //move to adjust quantity
+            mouseMove(robot, getXQuantity(),getYQuantity()); //move to adjust quantity
             for(int j = 0; j < quantity; j++){
                 click();
             }
             robot.delay(rand.nextInt(1596 - 1150) + 1150);
-            robot.mouseMove(775 + rand.nextInt(12), 327 + rand.nextInt(12)); //move to adjust price - change to methods like quantity
+            mouseMove(robot, 775 + rand.nextInt(12), 327 + rand.nextInt(12)); //move to adjust price - change to methods like quantity
             for(int k = 0; k < rand.nextInt(4) + 4; k++){
                 click();
             }
             robot.delay(rand.nextInt(1230 - 1045) + 1045);
-            robot.mouseMove(getXConfirm(),getYConfirm());  //move to confirm
+            mouseMove(robot, getXConfirm(),getYConfirm());  //move to confirm
             click();
             robot.delay(rand.nextInt(954 - 476) + 1500);
         }
+    }
+    
+    public void mouseMove(Robot robot, int x, int y){ //need to convert to array necessary??? if so put method in mousemovement
+        int[] finish = {x, y};
+        mouse.reduction(robot, finish);
+        //robot.mouseMove(x, y);
     }
 }
