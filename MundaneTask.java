@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Divination {
+public class MundaneTask {
     Random rand = new Random();
     Robot robot = new Robot();
     MouseMovement mouse = new MouseMovement();
@@ -18,10 +18,10 @@ public class Divination {
     int numberOfCycles; 
     
     public static void main(String[] args) throws AWTException{
-        new Divination();
+        new MundaneTask();
     }
     
-    public Divination() throws AWTException{
+    public MundaneTask() throws AWTException{
         //detectLights();
         
         while(true){
